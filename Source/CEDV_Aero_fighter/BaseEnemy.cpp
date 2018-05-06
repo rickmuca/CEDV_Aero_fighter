@@ -1,0 +1,69 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#include "BaseEnemy.h"
+#include "EngineMinimal.h"
+#include "EngineUtils.h"
+#include "PhysicsEngine/PhysicsAsset.h"
+
+// Sets default values
+ABaseEnemy::ABaseEnemy()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMeshComponent");
+	auto MeshAsset = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Game/TwinStick/Meshes/TwinStickUFO.TwinStickUFO"));
+	if (MeshAsset.Succeeded())
+	{
+		StaticMesh->SetStaticMesh(MeshAsset.Object);
+		StaticMesh->SetWorldScale3D(FVector(50.0f, 50.0f, 50.0f));
+		StaticMesh->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
+	}
+
+	auto ParticleSystemAsset = ConstructorHelpers::FObjectFinder<UParticleSystem>(TEXT("ParticleSystem'/Game/Particles/P_Explosion.P_Explosion'"));
+	if (ParticleSystemAsset.Succeeded())
+	{
+		ExplosionParticleSystem = ParticleSystemAsset.Object;
+	}
+
+	/*OnActorHit.AddDynamic(this, &ABaseEnemy::OnHit);
+	auto ProjectileBPClass = ConstructorHelpers::FClassFinder<AActor>(TEXT("Blueprint'/Game/TwinStickBP/Blueprints/TwinStickProjectile.TwinStickProjectile'"));
+	if (ProjectileBPClass.Succeeded()) {
+		ProjectileClass = ProjectileBPClass.Class;
+	}*/
+}
+
+// Called when the game starts or when spawned
+void ABaseEnemy::BeginPlay()
+{
+	Super::BeginPlay();
+	PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+}
+
+// Called every frame
+void ABaseEnemy::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	AccumulatedDeltaTime += DeltaTime;
+
+	// The common behaviour for all enemies will be to rotate them to face the player
+	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - GetActorLocation()).Rotator();
+	StaticMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
+
+	RunBehaviour();
+}
+
+void ABaseEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (OtherActor) {
+		if (OtherActor->IsA(ProjectileClass)) {
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
+			Destroy();
+		}
+	}
+}
+
+void ABaseEnemy::setType(FString Type)
+{
+	this->Type = Type;
+}
