@@ -25,8 +25,8 @@ ABaseEnemy::ABaseEnemy()
 		ExplosionParticleSystem = ParticleSystemAsset.Object;
 	}
 
-	/*OnActorHit.AddDynamic(this, &ABaseEnemy::OnHit);
-	auto ProjectileBPClass = ConstructorHelpers::FClassFinder<AActor>(TEXT("Blueprint'/Game/TwinStickBP/Blueprints/TwinStickProjectile.TwinStickProjectile'"));
+	OnActorHit.AddDynamic(this, &ABaseEnemy::OnHit);
+	/*auto ProjectileBPClass = ConstructorHelpers::FClassFinder<AActor>(TEXT("/Game/TwinStickBP/Blueprints/TwinStickProjectile.TwinStickProjectile"));
 	if (ProjectileBPClass.Succeeded()) {
 		ProjectileClass = ProjectileBPClass.Class;
 	}*/
@@ -55,15 +55,30 @@ void ABaseEnemy::Tick(float DeltaTime)
 
 void ABaseEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor) {
-		if (OtherActor->IsA(ProjectileClass)) {
+	//if (OtherActor) {
+	//	if (OtherActor->IsA(ProjectileClass)) {
 			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
 			Destroy();
-		}
-	}
+	//	}
+	//}
 }
 
-void ABaseEnemy::setType(FString Type)
+void ABaseEnemy::SetType(FString Type)
 {
 	this->Type = Type;
+}
+
+void ABaseEnemy::SetLife(int Life)
+{
+	this->Life = Life;
+}
+
+int ABaseEnemy::GetPoints()
+{
+	return this->Points;
+}
+
+void ABaseEnemy::SetPoints(int Points)
+{
+	this->Points = Points;
 }

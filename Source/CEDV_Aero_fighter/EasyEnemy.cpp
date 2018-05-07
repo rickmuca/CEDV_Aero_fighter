@@ -9,7 +9,9 @@ const FString AEasyEnemy::TYPE_NAME = "EasyEnemy";
 AEasyEnemy::AEasyEnemy() : Super()
 {
 	StaticMesh->SetRelativeScale3D(FVector(1.5f, 1.5f, 1.5f));
-	setType(TYPE_NAME);
+    SetType(TYPE_NAME);
+	SetLife(1);
+	SetPoints(100);
 }
 
 void AEasyEnemy::RunBehaviour()

@@ -22,11 +22,16 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	UFUNCTION(BlueprintCallable, Category = "BaseEnemy")
+		int GetPoints();
 
 private:
 	UPROPERTY()
 		TWeakObjectPtr<UParticleSystem> ExplosionParticleSystem;
 	FString Type;
+	int Life; // Número de colisiones antes de ser destruido
+	int Points; // Puntuacion conseguida al destruir al enemigo
 
 protected:
 	UFUNCTION()
@@ -43,5 +48,7 @@ protected:
 	
 	float FireTimeInterval = 2.0f;
 
-	void setType(FString type);
+	void SetType(FString Type);
+	void SetLife(int Life);
+	void SetPoints(int Points);
 };
