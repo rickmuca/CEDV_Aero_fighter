@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "AirProjectile.h"
 #include "BaseEnemy.generated.h"
 
 UCLASS(Abstract)
@@ -28,21 +29,24 @@ public:
 
 private:
 	UPROPERTY()
-		TWeakObjectPtr<UParticleSystem> ExplosionParticleSystem;
+	TWeakObjectPtr<UParticleSystem> ExplosionParticleSystem;
+
 	FString Type;
 	int Life; // Número de colisiones antes de ser destruido
 	int Points; // Puntuacion conseguida al destruir al enemigo
 
 protected:
 	UFUNCTION()
-		virtual void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+	virtual void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
 
 	virtual void RunBehaviour() PURE_VIRTUAL(ABaseEnemy::RunBehaviour, );
 
 	UPROPERTY()
-		TWeakObjectPtr<UStaticMeshComponent> StaticMesh;
+	TWeakObjectPtr<UStaticMeshComponent> StaticMesh;
 
-	TSubclassOf<AActor> ProjectileClass;
+	UPROPERTY()
+	TSubclassOf<class AAirProjectile> ProjectileClass;
+
 	TWeakObjectPtr<APawn> PlayerPawn;
 	float AccumulatedDeltaTime;
 	

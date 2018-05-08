@@ -26,10 +26,6 @@ ABaseEnemy::ABaseEnemy()
 	}
 
 	OnActorHit.AddDynamic(this, &ABaseEnemy::OnHit);
-	/*auto ProjectileBPClass = ConstructorHelpers::FClassFinder<AActor>(TEXT("/Game/TwinStickBP/Blueprints/TwinStickProjectile.TwinStickProjectile"));
-	if (ProjectileBPClass.Succeeded()) {
-		ProjectileClass = ProjectileBPClass.Class;
-	}*/
 }
 
 // Called when the game starts or when spawned
@@ -55,12 +51,12 @@ void ABaseEnemy::Tick(float DeltaTime)
 
 void ABaseEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
 {
-	//if (OtherActor) {
-	//	if (OtherActor->IsA(ProjectileClass)) {
+	if (OtherActor) {
+		if (OtherActor->IsA(AAirProjectile::StaticClass())) {
 			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
 			Destroy();
-	//	}
-	//}
+		}
+	}
 }
 
 void ABaseEnemy::SetType(FString Type)

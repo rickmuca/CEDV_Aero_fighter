@@ -22,6 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+
 	// Temporal reference to spawn new enemies
 	float AccumulatedDeltaTime;
 	float EnemySpawnTimeSeconds;
