@@ -3,6 +3,7 @@
 #include "BaseEnemy.h"
 #include "EngineMinimal.h"
 #include "EngineUtils.h"
+#include "EnemyManager.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 
 // Sets default values
@@ -33,6 +34,19 @@ void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	FString EnemyManCtl = FString(TEXT("EnemyManager_2"));
+	TWeakObjectPtr<AActor> EnemyManRef;
+
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
+		if (EnemyManCtl.Equals(ActorItr->GetName())) {
+			EnemyManRef = *ActorItr;
+			if (EnemyManRef.IsValid() && EnemyManRef.Get()->IsA(AEnemyManager::StaticClass())) {
+				this->ProjectileClass = Cast<AEnemyManager>(EnemyManRef.Get())->ProjectileClass;
+			}
+			break;
+		}
+	}
 
 }
 

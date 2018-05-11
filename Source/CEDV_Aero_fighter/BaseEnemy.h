@@ -25,7 +25,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	UFUNCTION(BlueprintCallable, Category = "BaseEnemy")
-		int GetPoints();
+	int GetPoints();
 
 private:
 	UPROPERTY()

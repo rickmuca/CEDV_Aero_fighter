@@ -69,6 +69,5 @@ void AEnemyManager::SpawnEnemy()
 {
 	TSubclassOf<ABaseEnemy> EnemyType = GetRandomEnemyClass();
 	FVector EnemySpawnLocation = GetRandomLocationFromReferencePlane();
-	printf("Voy a spawnear un enemigo");
 	GetWorld()->SpawnActor(EnemyType, &EnemySpawnLocation);
 }
