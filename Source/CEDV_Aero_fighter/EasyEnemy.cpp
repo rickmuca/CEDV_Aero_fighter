@@ -22,8 +22,8 @@ void AEasyEnemy::RunBehaviour()
 		FRotator SpawnRotation = GetActorRotation();
 
 		GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &SpawnRotation);
+		UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
 
 		AccumulatedDeltaTime = 0.0f;
 	}
 }
-

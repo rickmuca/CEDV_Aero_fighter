@@ -47,6 +47,9 @@ protected:
 	UPROPERTY()
 	TSubclassOf<class AAirProjectile> ProjectileClass;
 
+	UPROPERTY()
+	class USoundBase* FireSound;
+
 	TWeakObjectPtr<APawn> PlayerPawn;
 	float AccumulatedDeltaTime;
 	

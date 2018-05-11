@@ -26,6 +26,9 @@ ABaseEnemy::ABaseEnemy()
 		ExplosionParticleSystem = ParticleSystemAsset.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<USoundBase> FireAudio(TEXT("/Game/TwinStick/Audio/TwinStickFire.TwinStickFire"));
+	FireSound = FireAudio.Object;
+
 	OnActorHit.AddDynamic(this, &ABaseEnemy::OnHit);
 }
 
