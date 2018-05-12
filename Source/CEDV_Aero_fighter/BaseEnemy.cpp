@@ -50,7 +50,6 @@ void ABaseEnemy::BeginPlay()
 			break;
 		}
 	}
-
 }
 
 // Called every frame
