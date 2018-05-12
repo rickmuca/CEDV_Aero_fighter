@@ -7,8 +7,9 @@
 #include "GameEvent.generated.h"
 
 /**
-*
+* Game Event parent class
 */
+
 UCLASS(Abstract)
 class CEDV_AERO_FIGHTER_API UGameEvent : public UObject
 {
