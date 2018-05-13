@@ -4,6 +4,7 @@
 
 #include "Observer.h"
 #include "AeroFighterGameStateBase.h"
+#include "ScorePresenter.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "EventManager.generated.h"
@@ -24,6 +25,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ScorePresenter")
+	AScorePresenter* ScorePresenter;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

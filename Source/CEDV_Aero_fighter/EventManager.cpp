@@ -42,6 +42,9 @@ void AEventManager ::OnNotify(UObject* Entity, UGameEvent* Event)
 		if (Event->IsA(UKillEnemyEvent::StaticClass())) {
 			UKillEnemyEvent* KillEvent = Cast<UKillEnemyEvent>(Event);
 			this->Score += KillEvent->Score;
+			if (ScorePresenter != NULL) {
+				ScorePresenter->SetScore(this->Score);
+			}
 		}
 		break;
 	}
