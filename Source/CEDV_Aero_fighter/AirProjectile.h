@@ -32,6 +32,8 @@ public:
 	/** Returns CollisionComp subobject **/
 	FORCEINLINE class USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
+
+	UFUNCTION(BlueprintCallable)
 	FORCEINLINE class UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 };
 

@@ -9,7 +9,7 @@
 #include "EventBus.generated.h"
 
 /**
- * This class is used tp register/unregister of the event bus and post Events
+ * This class is used to subscribe to the event bus and post Events
  */
 
 class IObserver;
