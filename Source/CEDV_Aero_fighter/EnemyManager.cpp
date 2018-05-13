@@ -3,6 +3,7 @@
 #include "EnemyManager.h"
 #include "EngineUtils.h"
 #include "EasyEnemy.h"
+#include "MultiShootEnemy.h"
 
 // Sets default values
 AEnemyManager::AEnemyManager()
@@ -12,6 +13,7 @@ AEnemyManager::AEnemyManager()
 	PrimaryActorTick.bCanEverTick = true;
 	// Store references to enemy classes for later
 	EnemyClasses.AddUnique(AEasyEnemy::StaticClass());
+	EnemyClasses.AddUnique(AMultiShootEnemy::StaticClass());
 }
 
 // Called when the game starts or when spawned

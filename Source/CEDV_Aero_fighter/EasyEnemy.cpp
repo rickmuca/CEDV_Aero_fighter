@@ -16,9 +16,7 @@ AEasyEnemy::AEasyEnemy() : Super()
 
 void AEasyEnemy::RunBehaviour()
 {
-	FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 250.0f;
-	FRotator SpawnRotation = GetActorRotation();
-
+	// Move towards to player
 	FVector Direction = GetActorForwardVector();
 	SetActorRelativeLocation(FVector(
 		GetActorLocation().X + 3.f * Direction.X,
@@ -27,6 +25,9 @@ void AEasyEnemy::RunBehaviour()
 
 	// If fire interval has elapsed, spawn a new enemy projectile
 	if (AccumulatedDeltaTime >= FireTimeInterval) {
+		FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 250.0f;
+		FRotator SpawnRotation = GetActorRotation();
+
 		GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &SpawnRotation);
 		UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
 

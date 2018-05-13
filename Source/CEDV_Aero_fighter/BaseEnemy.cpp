@@ -62,7 +62,7 @@ void ABaseEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	AccumulatedDeltaTime += DeltaTime;
 
-	// The common behaviour for all enemies will be to rotate them to face the player
+	// Rotate to player
 	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - GetActorLocation()).Rotator();
 	StaticMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
 
