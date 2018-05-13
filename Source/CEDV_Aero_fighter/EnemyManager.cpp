@@ -18,7 +18,6 @@ AEnemyManager::AEnemyManager()
 void AEnemyManager::BeginPlay()
 {
 	Super::BeginPlay();
-	printf("Holi");
 	FString EnemySpawnPlaneString = FString(TEXT("EnemySpawnPlane"));
 	// Get a reference to the invisible plane used to spawn enemies
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)

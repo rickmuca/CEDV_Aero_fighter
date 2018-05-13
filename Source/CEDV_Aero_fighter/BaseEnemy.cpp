@@ -4,6 +4,9 @@
 #include "EngineMinimal.h"
 #include "EngineUtils.h"
 #include "EnemyManager.h"
+#include "KillEnemyEvent.h"
+#include "EventBus.h"
+#include "AeroFighterGameStateBase.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 
 // Sets default values
@@ -50,6 +53,10 @@ void ABaseEnemy::BeginPlay()
 			break;
 		}
 	}
+
+	if (GetWorld() != NULL) {
+		GameState = GetWorld()->GetGameState<AAeroFighterGameStateBase>();
+	}
 }
 
 // Called every frame
@@ -70,6 +77,7 @@ void ABaseEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpu
 	if (OtherActor) {
 		if (OtherActor->IsA(AAirProjectile::StaticClass())) {
 			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
+			GenerateKillingEvent();
 			Destroy();
 		}
 	}
@@ -93,4 +101,15 @@ int ABaseEnemy::GetPoints()
 void ABaseEnemy::SetPoints(int Points)
 {
 	this->Points = Points;
+}
+
+void ABaseEnemy::GenerateKillingEvent() {
+	if (GameState != NULL) {
+		UKillEnemyEvent* KillEvent = NewObject<UKillEnemyEvent>();
+		KillEvent->Type = this->Type;
+		KillEvent->Score = this->Points;
+
+		UEventBus* Bus = GameState->GetEventBus();
+		Bus->Post(this, KillEvent);
+	}
 }

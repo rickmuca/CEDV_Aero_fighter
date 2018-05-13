@@ -5,7 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "AirProjectile.h"
+#include "AeroFighterGameStateBase.h"
+#include "EventBus.h"
 #include "BaseEnemy.generated.h"
+
+class UEventBus;
 
 UCLASS(Abstract)
 class CEDV_AERO_FIGHTER_API ABaseEnemy : public AActor
@@ -31,9 +35,12 @@ private:
 	UPROPERTY()
 	TWeakObjectPtr<UParticleSystem> ExplosionParticleSystem;
 
+	AAeroFighterGameStateBase* GameState;
 	FString Type;
 	int Life; // Número de colisiones antes de ser destruido
 	int Points; // Puntuacion conseguida al destruir al enemigo
+
+	void GenerateKillingEvent();
 
 protected:
 	UFUNCTION()

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Observer.h"
+#include "AeroFighterGameStateBase.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "EventManager.generated.h"
@@ -26,6 +27,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	AAeroFighterGameStateBase * GameState;
 	
-	
+	int32 Score;
+	int32 KilledEnemies;
 };

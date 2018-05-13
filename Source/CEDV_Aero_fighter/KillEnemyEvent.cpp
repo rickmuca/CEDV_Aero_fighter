@@ -3,8 +3,9 @@
 #include "KillEnemyEvent.h"
 
 UKillEnemyEvent::UKillEnemyEvent() {
-	score = 0;
-	type = "";
+	Code = UGameEvent::KILL_EVENT;
+	Score = 0;
+	Type = "";
 }
 
 UKillEnemyEvent::~UKillEnemyEvent() { }

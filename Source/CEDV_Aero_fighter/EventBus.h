@@ -9,7 +9,7 @@
 #include "EventBus.generated.h"
 
 /**
- * 
+ * This class is used tp register/unregister of the event bus and post Events
  */
 
 class IObserver;
@@ -26,7 +26,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Observer Pattern")
 	void Unregister(TScriptInterface<IObserver> Observer);
 
-protected:
 	UFUNCTION(BlueprintCallable, Category = "Observer Pattern")
 	void Post(UObject* Entity, UGameEvent* Event);
 

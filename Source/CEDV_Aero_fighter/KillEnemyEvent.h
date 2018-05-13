@@ -16,8 +16,8 @@ class CEDV_AERO_FIGHTER_API UKillEnemyEvent : public UGameEvent
 	GENERATED_BODY()
 
 public:
-	int score;
-	FString type;
+	int Score;
+	FString Type;
 
 	UKillEnemyEvent();
 	~UKillEnemyEvent();

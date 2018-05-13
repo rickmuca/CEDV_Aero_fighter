@@ -18,4 +18,8 @@ class CEDV_AERO_FIGHTER_API UGameEvent : public UObject
 public:
 	UGameEvent();
 	~UGameEvent();
+
+	int Code;
+
+	static const int KILL_EVENT = 0;
 };
