@@ -63,7 +63,7 @@ void AEventManager ::OnNotify(UObject* Entity, UGameEvent* Event)
 
 		TWeakObjectPtr<APawn> PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), PlayerPawn.Get()->GetActorLocation());
-		PlayerPawn.Get()->Destroy();
+		UGameplayStatics::OpenLevel(GetWorld(), "TwinStickExampleMap");
 		break;
 	}
 }
