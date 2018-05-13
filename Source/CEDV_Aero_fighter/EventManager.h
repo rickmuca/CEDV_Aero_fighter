@@ -28,7 +28,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	AAeroFighterGameStateBase * GameState;
+	UPROPERTY()
+	AAeroFighterGameStateBase* GameState;
 	
 	int32 Score;
 	int32 KilledEnemies;

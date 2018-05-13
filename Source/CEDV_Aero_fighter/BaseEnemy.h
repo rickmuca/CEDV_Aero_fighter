@@ -34,8 +34,10 @@ public:
 private:
 	UPROPERTY()
 	TWeakObjectPtr<UParticleSystem> ExplosionParticleSystem;
-
+	
+	UPROPERTY()
 	AAeroFighterGameStateBase* GameState;
+	
 	FString Type;
 	int Life; // Número de colisiones antes de ser destruido
 	int Points; // Puntuacion conseguida al destruir al enemigo
