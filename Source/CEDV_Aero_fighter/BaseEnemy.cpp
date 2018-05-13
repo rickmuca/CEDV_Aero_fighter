@@ -49,13 +49,10 @@ void ABaseEnemy::BeginPlay()
 			EnemyManRef = *ActorItr;
 			if (EnemyManRef.IsValid() && EnemyManRef.Get()->IsA(AEnemyManager::StaticClass())) {
 				this->ProjectileClass = Cast<AEnemyManager>(EnemyManRef.Get())->ProjectileClass;
+				this->EventBus = Cast<AEnemyManager>(EnemyManRef.Get())->GetEventBus();
 			}
 			break;
 		}
-	}
-
-	if (GetWorld() != NULL) {
-		GameState = GetWorld()->GetGameState<AAeroFighterGameStateBase>();
 	}
 }
 
@@ -104,12 +101,11 @@ void ABaseEnemy::SetPoints(int Points)
 }
 
 void ABaseEnemy::GenerateKillingEvent() {
-	if (GameState != NULL) {
+	if (EventBus != NULL) {
 		UKillEnemyEvent* KillEvent = NewObject<UKillEnemyEvent>();
 		KillEvent->Type = this->Type;
 		KillEvent->Score = this->Points;
 
-		UEventBus* Bus = GameState->GetEventBus();
-		Bus->Post(this, KillEvent);
+		EventBus->Post(this, KillEvent);
 	}
 }

@@ -29,6 +29,9 @@ void AEnemyManager::BeginPlay()
 			break;
 		}
 	}
+
+	AAeroFighterGameStateBase* GameState = GetWorld()->GetGameState<AAeroFighterGameStateBase>();
+	EventBus = GameState->GetEventBus();
 }
 
 // Called every frame
@@ -69,4 +72,8 @@ void AEnemyManager::SpawnEnemy()
 	TSubclassOf<ABaseEnemy> EnemyType = GetRandomEnemyClass();
 	FVector EnemySpawnLocation = GetRandomLocationFromReferencePlane();
 	GetWorld()->SpawnActor(EnemyType, &EnemySpawnLocation);
+}
+
+UEventBus* AEnemyManager::GetEventBus() const {
+	return EventBus.Get();
 }

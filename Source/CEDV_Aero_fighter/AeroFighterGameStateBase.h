@@ -18,5 +18,6 @@ public:
 	UEventBus* GetEventBus();
 
 private:
+	UPROPERTY()
 	TWeakObjectPtr<UEventBus> EventBus;
 };

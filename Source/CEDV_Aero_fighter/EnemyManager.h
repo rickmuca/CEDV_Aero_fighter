@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "AirProjectile.h"
+#include "EventBus.h"
 #include "EnemyManager.generated.h"
 
 class ABaseEnemy;
@@ -39,9 +40,15 @@ private:
 
 	FVector GetRandomLocationFromReferencePlane() const;
 	TSubclassOf<ABaseEnemy> GetRandomEnemyClass() const;
+
+	UPROPERTY()
+	TWeakObjectPtr<UEventBus> EventBus;
+
 	void SpawnEnemy();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UEventBus* GetEventBus() const;
 };

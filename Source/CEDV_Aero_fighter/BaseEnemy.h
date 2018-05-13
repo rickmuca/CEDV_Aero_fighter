@@ -36,7 +36,7 @@ private:
 	TWeakObjectPtr<UParticleSystem> ExplosionParticleSystem;
 	
 	UPROPERTY()
-	AAeroFighterGameStateBase* GameState;
+	UEventBus* EventBus;
 	
 	FString Type;
 	int Life; // Número de colisiones antes de ser destruido

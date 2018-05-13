@@ -21,8 +21,12 @@ void AEventManager::BeginPlay()
 
 	Instance = this;
 	if (GetWorld() != NULL) {
-		GameState = GetWorld()->GetGameState<AAeroFighterGameStateBase>();
-		GameState->GetEventBus()->Register(Instance.Get());
+		AAeroFighterGameStateBase* GameState = GetWorld()->GetGameState<AAeroFighterGameStateBase>();
+
+		EventBus = GameState->GetEventBus();
+		if (EventBus != NULL) {
+			EventBus->Register(Instance.Get());
+		}
 	}
 }
 
