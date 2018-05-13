@@ -16,11 +16,17 @@ AEasyEnemy::AEasyEnemy() : Super()
 
 void AEasyEnemy::RunBehaviour()
 {
+	FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 250.0f;
+	FRotator SpawnRotation = GetActorRotation();
+
+	FVector Direction = GetActorForwardVector();
+	SetActorRelativeLocation(FVector(
+		GetActorLocation().X + 3.f * Direction.X,
+		GetActorLocation().Y + 3.f * Direction.Y,
+		GetActorLocation().Z + 3.f * Direction.Z));
+
 	// If fire interval has elapsed, spawn a new enemy projectile
 	if (AccumulatedDeltaTime >= FireTimeInterval) {
-		FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 250.0f;
-		FRotator SpawnRotation = GetActorRotation();
-
 		GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &SpawnRotation);
 		UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
 
