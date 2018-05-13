@@ -23,11 +23,15 @@ AMultiShootEnemy::AMultiShootEnemy() : Super()
 void AMultiShootEnemy::RunBehaviour()
 {
 	// Just move forward
-	FVector Direction = GetActorForwardVector();
-	SetActorRelativeLocation(FVector(
-		GetActorLocation().X + -3.f,
-		GetActorLocation().Y,
-		GetActorLocation().Z));
+	// Move towards to player
+	FVector Distance = PlayerPawn->GetActorLocation() - GetActorLocation();
+	if (Distance.Size() >= 200.0f) {
+		FVector Direction = GetActorForwardVector();
+		SetActorRelativeLocation(FVector(
+			GetActorLocation().X + -3.f,
+			GetActorLocation().Y,
+			GetActorLocation().Z));
+	}
 
 	// If fire interval has elapsed, spawn a new enemy projectile
 	if (AccumulatedDeltaTime >= FireTimeInterval) {

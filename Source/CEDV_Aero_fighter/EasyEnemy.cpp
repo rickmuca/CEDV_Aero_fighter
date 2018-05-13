@@ -17,11 +17,15 @@ AEasyEnemy::AEasyEnemy() : Super()
 void AEasyEnemy::RunBehaviour()
 {
 	// Move towards to player
-	FVector Direction = GetActorForwardVector();
-	SetActorRelativeLocation(FVector(
-		GetActorLocation().X + 3.f * Direction.X,
-		GetActorLocation().Y + 3.f * Direction.Y,
-		GetActorLocation().Z + 3.f * Direction.Z));
+	FVector Distance = PlayerPawn->GetActorLocation() - GetActorLocation();
+	if (Distance.Size() >= 200.0f) {
+
+		FVector Direction = GetActorForwardVector();
+		SetActorRelativeLocation(FVector(
+			GetActorLocation().X + 3.f * Direction.X,
+			GetActorLocation().Y + 3.f * Direction.Y,
+			GetActorLocation().Z + 3.f * Direction.Z));
+	}
 
 	// If fire interval has elapsed, spawn a new enemy projectile
 	if (AccumulatedDeltaTime >= FireTimeInterval) {
