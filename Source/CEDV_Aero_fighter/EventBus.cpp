@@ -5,7 +5,7 @@
 
 void UEventBus::Register(TScriptInterface<IObserver> Observer)
 {
-	Observers.Add((IObserver*)Observer.GetInterface());
+	Observers.Emplace((IObserver*)Observer.GetInterface());
 }
 
 void UEventBus::Unregister(TScriptInterface<IObserver> Observer)

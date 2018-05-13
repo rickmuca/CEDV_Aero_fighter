@@ -19,9 +19,10 @@ void AEventManager::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Instance = this;
 	if (GetWorld() != NULL) {
 		GameState = GetWorld()->GetGameState<AAeroFighterGameStateBase>();
-		GameState->GetEventBus()->Register(this);
+		GameState->GetEventBus()->Register(Instance.Get());
 	}
 }
 

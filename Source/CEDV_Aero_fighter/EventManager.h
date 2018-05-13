@@ -35,6 +35,7 @@ private:
 	UPROPERTY()
 	AAeroFighterGameStateBase* GameState;
 	
+	TWeakObjectPtr<AEventManager> Instance;
 	int32 Score;
 	int32 KilledEnemies;
 };
