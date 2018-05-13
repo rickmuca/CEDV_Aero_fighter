@@ -33,6 +33,9 @@ public:
 
 private:
 	UPROPERTY()
+	TWeakObjectPtr<UParticleSystem> ExplosionParticleSystem;
+
+	UPROPERTY()
 	UEventBus* EventBus;
 	
 	UPROPERTY()

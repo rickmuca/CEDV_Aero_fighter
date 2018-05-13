@@ -10,7 +10,7 @@
 * Game Event parent class
 */
 
-UCLASS(Abstract)
+UCLASS(Abstract, BlueprintType)
 class CEDV_AERO_FIGHTER_API UGameEvent : public UObject
 {
 	GENERATED_BODY()
@@ -22,4 +22,5 @@ public:
 	int Code;
 
 	static const int KILL_EVENT = 0;
+	static const int PLAYER_KILLED_EVENT = 1;
 };

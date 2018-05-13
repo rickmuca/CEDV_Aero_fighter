@@ -5,20 +5,19 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "GameEvent.h"
-#include "KillEnemyEvent.generated.h"
+#include "PlayerKilledEvent.generated.h"
 
 /**
-* Event to generate when killing an enemy
-*/
+ * Event to detect when the player is about to be killed
+ */
 UCLASS(BlueprintType)
-class CEDV_AERO_FIGHTER_API UKillEnemyEvent : public UGameEvent
+class CEDV_AERO_FIGHTER_API UPlayerKilledEvent : public UGameEvent
 {
 	GENERATED_BODY()
-
+	
 public:
-	int Score;
 	FString Type;
-
-	UKillEnemyEvent();
-	~UKillEnemyEvent();
+	
+	UPlayerKilledEvent();
+	~UPlayerKilledEvent();
 };

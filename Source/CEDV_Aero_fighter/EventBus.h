@@ -14,7 +14,7 @@
 
 class IObserver;
 
-UCLASS()
+UCLASS(BlueprintType)
 class CEDV_AERO_FIGHTER_API UEventBus : public UObject
 {
 	GENERATED_BODY()
