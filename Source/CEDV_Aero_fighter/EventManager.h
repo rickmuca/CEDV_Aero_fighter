@@ -43,4 +43,7 @@ private:
 	
 	int32 Score;
 	int32 KilledEnemies;
+
+	// Save game on game over
+	void SaveGame();
 };

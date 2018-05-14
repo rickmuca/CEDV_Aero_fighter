@@ -4,6 +4,7 @@
 #include "EngineMinimal.h"
 #include "EngineUtils.h"
 #include "EventBus.h"
+#include "MySaveGame.h"
 #include "KillEnemyEvent.h"
 #include "AeroFighterGameStateBase.h"
 
@@ -60,10 +61,19 @@ void AEventManager ::OnNotify(UObject* Entity, UGameEvent* Event)
 		}
 		break;
 	case UGameEvent::PLAYER_KILLED_EVENT:
-
+		this->SaveGame();
 		TWeakObjectPtr<APawn> PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), PlayerPawn.Get()->GetActorLocation());
-		UGameplayStatics::OpenLevel(GetWorld(), "TwinStickExampleMap");
+		UGameplayStatics::OpenLevel(GetWorld(), "MainMap");
 		break;
 	}
+}
+
+// Save current score and name
+void AEventManager::SaveGame()
+{
+	FDateTime currentDateTime = FDateTime::Now();
+
+	// Player name will be the current date in this version
+	UMySaveGame::SaveMaxScore(currentDateTime.ToString(), this->Score);
 }
