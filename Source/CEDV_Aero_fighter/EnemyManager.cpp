@@ -4,16 +4,18 @@
 #include "EngineUtils.h"
 #include "EasyEnemy.h"
 #include "MultiShootEnemy.h"
+#include "RockEnemy.h"
 
 // Sets default values
 AEnemyManager::AEnemyManager()
-	: AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(3.5f), ReferencePlane(0)
+	: AccumulatedDeltaTime(0.0f), EnemySpawnTimeSeconds(2.0f), ReferencePlane(0)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	// Store references to enemy classes for later
 	EnemyClasses.AddUnique(AEasyEnemy::StaticClass());
 	EnemyClasses.AddUnique(AMultiShootEnemy::StaticClass());
+	EnemyClasses.AddUnique(ARockEnemy::StaticClass());
 }
 
 // Called when the game starts or when spawned

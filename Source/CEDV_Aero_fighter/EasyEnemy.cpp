@@ -8,6 +8,15 @@ const FString AEasyEnemy::TYPE_NAME = "EasyEnemy";
 // Sets default values
 AEasyEnemy::AEasyEnemy() : Super()
 {
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMeshComponent");
+	auto MeshAsset = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Game/TwinStick/Meshes/TwinStickUFO.TwinStickUFO"));
+	if (MeshAsset.Succeeded())
+	{
+		StaticMesh->SetStaticMesh(MeshAsset.Object);
+		StaticMesh->SetWorldScale3D(FVector(50.0f, 50.0f, 50.0f));
+		StaticMesh->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
+	}
+
 	StaticMesh->SetRelativeScale3D(FVector(1.5f, 1.5f, 1.5f));
     SetType(TYPE_NAME);
 	SetLife(1);
@@ -16,6 +25,10 @@ AEasyEnemy::AEasyEnemy() : Super()
 
 void AEasyEnemy::RunBehaviour()
 {
+	// Rotate to player
+	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - GetActorLocation()).Rotator();
+	StaticMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
+
 	// Move towards to player
 	FVector Distance = PlayerPawn->GetActorLocation() - GetActorLocation();
 	if (Distance.Size() >= 200.0f) {

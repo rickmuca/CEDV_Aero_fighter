@@ -9,6 +9,15 @@ const FString AMultiShootEnemy::TYPE_NAME = "MultiShootEnemy";
 // Sets default values
 AMultiShootEnemy::AMultiShootEnemy() : Super()
 {
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMeshComponent");
+	auto MeshAsset = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Game/TwinStick/Meshes/TwinStickUFO.TwinStickUFO"));
+	if (MeshAsset.Succeeded())
+	{
+		StaticMesh->SetStaticMesh(MeshAsset.Object);
+		StaticMesh->SetWorldScale3D(FVector(50.0f, 50.0f, 50.0f));
+		StaticMesh->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
+	}
+
 	TWeakObjectPtr<UMaterialInstanceDynamic> Material = StaticMesh->CreateAndSetMaterialInstanceDynamic(0);
 	Material->SetVectorParameterValue(FName(TEXT("Color")), FLinearColor(0.0f, 0.0f, 1.0f));
 
@@ -23,6 +32,10 @@ AMultiShootEnemy::AMultiShootEnemy() : Super()
 
 void AMultiShootEnemy::RunBehaviour()
 {
+	// Rotate to player
+	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - GetActorLocation()).Rotator();
+	StaticMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
+
 	// Just move forward
 	// Move towards to player
 	FVector Distance = PlayerPawn->GetActorLocation() - GetActorLocation();

@@ -14,14 +14,6 @@ ABaseEnemy::ABaseEnemy()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMeshComponent");
-	auto MeshAsset = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Game/TwinStick/Meshes/TwinStickUFO.TwinStickUFO"));
-	if (MeshAsset.Succeeded())
-	{
-		StaticMesh->SetStaticMesh(MeshAsset.Object);
-		StaticMesh->SetWorldScale3D(FVector(50.0f, 50.0f, 50.0f));
-		StaticMesh->SetRelativeRotation(FRotator(0.0f, 270.0f, 0.0f));
-	}
 
 	auto ParticleSystemAsset = ConstructorHelpers::FObjectFinder<UParticleSystem>(TEXT("ParticleSystem'/Game/Particles/P_Explosion.P_Explosion'"));
 	if (ParticleSystemAsset.Succeeded())
@@ -62,21 +54,21 @@ void ABaseEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	AccumulatedDeltaTime += DeltaTime;
 
-	// Rotate to player
-	FRotator EnemyRotation = FRotationMatrix::MakeFromX(PlayerPawn->GetActorLocation() - GetActorLocation()).Rotator();
-	StaticMesh->SetRelativeRotation(EnemyRotation, false, nullptr, ETeleportType::TeleportPhysics);
-
 	RunBehaviour();
 }
 
 void ABaseEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
 {
 	if (OtherActor) {
-		if (OtherActor->IsA(AAirProjectile::StaticClass())) {
-			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
+		//if (OtherActor->IsA(AAirProjectile::StaticClass())) {
+		this->Life--;
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
+		if (this->Life == 0)
+		{
 			GenerateKillingEvent();
 			Destroy();
 		}
+		//}
 	}
 }
 
