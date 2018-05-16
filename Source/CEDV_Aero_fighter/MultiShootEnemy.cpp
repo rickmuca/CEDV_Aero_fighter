@@ -2,7 +2,8 @@
 
 #include "MultiShootEnemy.h"
 #include "EngineMinimal.h"
-
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
 const FString AMultiShootEnemy::TYPE_NAME = "MultiShootEnemy";
 
 // Sets default values
@@ -25,10 +26,11 @@ void AMultiShootEnemy::RunBehaviour()
 	// Just move forward
 	// Move towards to player
 	FVector Distance = PlayerPawn->GetActorLocation() - GetActorLocation();
+	
 	if (Distance.Size() >= 200.0f) {
 		FVector Direction = GetActorForwardVector();
 		SetActorRelativeLocation(FVector(
-			GetActorLocation().X + -3.f,
+			GetActorLocation().X + -10.f,
 			GetActorLocation().Y,
 			GetActorLocation().Z));
 	}

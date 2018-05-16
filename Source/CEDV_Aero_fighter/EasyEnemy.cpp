@@ -22,9 +22,9 @@ void AEasyEnemy::RunBehaviour()
 
 		FVector Direction = GetActorForwardVector();
 		SetActorRelativeLocation(FVector(
-			GetActorLocation().X + 3.f * Direction.X,
-			GetActorLocation().Y + 3.f * Direction.Y,
-			GetActorLocation().Z + 3.f * Direction.Z));
+			GetActorLocation().X + 15.f * Direction.X,
+			GetActorLocation().Y + 15.f * Direction.Y,
+			GetActorLocation().Z + 15.f * Direction.Z));
 	}
 
 	// If fire interval has elapsed, spawn a new enemy projectile
