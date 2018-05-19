@@ -6,6 +6,7 @@
 #include "EventBus.h"
 #include "MySaveGame.h"
 #include "KillEnemyEvent.h"
+#include "MeteoriteDestroyedEvent.h"
 #include "AeroFighterGameStateBase.h"
 
 
@@ -19,6 +20,10 @@ AEventManager::AEventManager() : KilledEnemies(0), Score(0)
 	if (ParticleSystemAsset.Succeeded())
 	{
 		ExplosionParticleSystem = ParticleSystemAsset.Object;
+	}
+
+	if (KilledEnemiesToGainBonus <= 0) {
+		this->KilledEnemiesToGainBonus = 10;
 	}
 }
 
@@ -54,12 +59,19 @@ void AEventManager ::OnNotify(UObject* Entity, UGameEvent* Event)
 
 		if (Event->IsA(UKillEnemyEvent::StaticClass())) {
 			UKillEnemyEvent* KillEvent = Cast<UKillEnemyEvent>(Event);
-			this->Score += KillEvent->Score;
-			if (ScorePresenter != NULL) {
-				ScorePresenter->SetScore(this->Score);
-			}
+			this->EvaluateScoreAccordingKilledEnemies(KillEvent->Score);
 		}
 		break;
+
+	case UGameEvent::METEORITE_DESTROYED:
+		this->KilledEnemies++;
+
+		if (Event->IsA(UMeteoriteDestroyedEvent::StaticClass())) {
+			UMeteoriteDestroyedEvent* DestroyEvent = Cast<UMeteoriteDestroyedEvent>(Event);
+			this->EvaluateScoreAccordingKilledEnemies(DestroyEvent->Score);
+		}
+		break;
+
 	case UGameEvent::PLAYER_KILLED_EVENT:
 		this->SaveGame();
 		TWeakObjectPtr<APawn> PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
@@ -76,4 +88,16 @@ void AEventManager::SaveGame()
 
 	// Player name will be the current date in this version
 	UMySaveGame::SaveMaxScore(currentDateTime.ToString(), this->Score);
+}
+
+void AEventManager::EvaluateScoreAccordingKilledEnemies(int32 ScoreToAdd) {
+	this->Score += ScoreToAdd;
+	if (this->KilledEnemies >= KilledEnemiesToGainBonus) {
+		this->KilledEnemies = 0;
+		this->Score += ScoreToAdd + this->Score / 5;
+	}
+
+	if (ScorePresenter != NULL) {
+		ScorePresenter->SetScore(this->Score);
+	}
 }

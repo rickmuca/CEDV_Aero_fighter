@@ -22,6 +22,9 @@ public:
 	UPROPERTY(Category = Projectile, EditAnywhere)
 	TSubclassOf<class AAirProjectile> ProjectileClass;
 
+	UPROPERTY(Category = Meteorite, EditAnywhere)
+	TSubclassOf<class AActor> MeteoriteClass;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -41,6 +41,7 @@ void ABaseEnemy::BeginPlay()
 			EnemyManRef = *ActorItr;
 			if (EnemyManRef.IsValid() && EnemyManRef.Get()->IsA(AEnemyManager::StaticClass())) {
 				this->ProjectileClass = Cast<AEnemyManager>(EnemyManRef.Get())->ProjectileClass;
+				this->MeteoriteClass = Cast<AEnemyManager>(EnemyManRef.Get())->MeteoriteClass;
 				this->EventBus = Cast<AEnemyManager>(EnemyManRef.Get())->GetEventBus();
 			}
 			break;
@@ -59,16 +60,19 @@ void ABaseEnemy::Tick(float DeltaTime)
 
 void ABaseEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor) {
-		//if (OtherActor->IsA(AAirProjectile::StaticClass())) {
-		this->Life--;
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
-		if (this->Life == 0)
-		{
+	if (!OtherActor) {
+		return;
+	}
+
+	this->Life--;
+	if (this->Life == 0) {
+		if (OtherActor->IsA(AAirProjectile::StaticClass())) {
 			GenerateKillingEvent();
-			Destroy();
 		}
-		//}
+		this->DestroyEnemy(Hit.Location);
+	}
+	else {
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Hit.Location);
 	}
 }
 
@@ -90,6 +94,11 @@ int ABaseEnemy::GetPoints()
 void ABaseEnemy::SetPoints(int Points)
 {
 	this->Points = Points;
+}
+
+void ABaseEnemy::DestroyEnemy(FVector Location) {
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystem.Get(), Location);
+	Destroy();
 }
 
 void ABaseEnemy::GenerateKillingEvent() {

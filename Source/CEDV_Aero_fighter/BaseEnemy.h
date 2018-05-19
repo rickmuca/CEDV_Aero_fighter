@@ -43,6 +43,7 @@ private:
 	int Points; // Puntuacion conseguida al destruir al enemigo
 
 	void GenerateKillingEvent();
+	void DestroyEnemy(FVector Location);
 
 protected:
 	UFUNCTION()
@@ -55,6 +56,9 @@ protected:
 
 	UPROPERTY()
 	TSubclassOf<class AAirProjectile> ProjectileClass;
+
+	UPROPERTY()
+	TSubclassOf<class AActor> MeteoriteClass;
 
 	UPROPERTY()
 	class USoundBase* FireSound;

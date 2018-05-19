@@ -15,7 +15,7 @@ AEnemyManager::AEnemyManager()
 	// Store references to enemy classes for later
 	EnemyClasses.AddUnique(AEasyEnemy::StaticClass());
 	EnemyClasses.AddUnique(AMultiShootEnemy::StaticClass());
-	EnemyClasses.AddUnique(ARockEnemy::StaticClass());
+	//EnemyClasses.AddUnique(ARockEnemy::StaticClass());
 }
 
 // Called when the game starts or when spawned
@@ -74,8 +74,12 @@ TSubclassOf<ABaseEnemy> AEnemyManager::GetRandomEnemyClass() const
 void AEnemyManager::SpawnEnemy()
 {
 	TSubclassOf<ABaseEnemy> EnemyType = GetRandomEnemyClass();
+	
 	FVector EnemySpawnLocation = GetRandomLocationFromReferencePlane();
+	FVector MeteoriteSpawnLocation = GetRandomLocationFromReferencePlane();
+
 	GetWorld()->SpawnActor(EnemyType, &EnemySpawnLocation);
+	GetWorld()->SpawnActor(MeteoriteClass, &MeteoriteSpawnLocation);
 }
 
 UEventBus* AEnemyManager::GetEventBus() const {

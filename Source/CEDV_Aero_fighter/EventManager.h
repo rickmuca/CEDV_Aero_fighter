@@ -28,6 +28,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ScorePresenter")
 	AScorePresenter* ScorePresenter;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BonusCodition")
+	int32 KilledEnemiesToGainBonus;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -46,4 +49,7 @@ private:
 
 	// Save game on game over
 	void SaveGame();
+
+	// Evaluate whether gain bonus or not
+	void EvaluateScoreAccordingKilledEnemies(int32 ScoreToAdd);
 };

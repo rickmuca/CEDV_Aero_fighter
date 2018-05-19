@@ -23,4 +23,5 @@ public:
 
 	static const int KILL_EVENT = 0;
 	static const int PLAYER_KILLED_EVENT = 1;
+	static const int METEORITE_DESTROYED = 2;
 };

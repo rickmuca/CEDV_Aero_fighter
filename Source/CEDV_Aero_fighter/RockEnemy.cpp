@@ -40,11 +40,11 @@ void ARockEnemy::RunBehaviour()
 	// Move towards to player
 	FVector Distance = PlayerPawn->GetActorLocation() - GetActorLocation();
 
-	if (Distance.Size() >= 200.0f) {
+	//if (Distance.Size() >= 100.0f) {
 		FVector Direction = GetActorForwardVector();
 		SetActorRelativeLocation(FVector(
 			GetActorLocation().X + -20.f,
 			GetActorLocation().Y,
 			GetActorLocation().Z));
-	}
+	//}
 }
